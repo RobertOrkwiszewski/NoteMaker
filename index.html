@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Maker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module" src="/backend.ts"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <!-- PAGES -->
+    <section id="folderPage" class="page">
+
+        <div class="folderPageDiv">
+            <div id="folderListDiv">
+                <text id="folderPageTitle">Deine Ordner</text>
+                <button id="selectedFolderButton">Kein Ordner ausgewählt</button>
+                <div id="folderList"></div>
+            </div>
+
+            <div id="settingListDiv">
+                <button id="newFolderButton">Neuer Ordner</button>
+                <button id="newFileButton">Neue Datei</button>
+                <button id="deleteFolderFileButton">Ordner/Datei löschen</button>
+                <button id="renameFolderFileButton">Ordner/Datei umbenennen</button>
+                <button id="isEditModeButton">Bearbeitungsmodus</button>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="fileEditPage" class="page">
+
+        <div id="fileEditPageDiv">
+            <div id="fileEditListDiv">
+            </div>
+            <div id="fileEditButtonDiv">
+                <button id="navigateToFolderButton"><i data-lucide="arrow-left"></i></button>
+                <button id="addModuleButton"><i data-lucide="plus"></i></button>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="fileViewPage" class="page">
+
+        <div id="fileViewPageDiv">
+            <div id="fileViewListDiv">
+            </div>
+            <div id="fileViewButtonDiv">
+                <button id="navigateToFolderViewButton"><i data-lucide="arrow-left"></i></button>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- MODALS -->
+    <div id="confirmTaskModal" class="modal-overlay">
+        <text id="confirmTaskText" class="modalText"></text>
+        <button id="cancelTaskButton" class="modalButtons">Abbrechen</button>
+        <button id="confirmTaskButton" class="modalButtons">Bestätigen</button>
+    </div>
+    <div id="textFieldTaskModal" class="modal-overlay">
+        <text id="textFieldTaskText" class="modalText"></text>
+        <textarea id="textFieldTaskTextField" class="modalTextField"></textarea>
+        <button id="cancelTextFieldTaskButton" class="modalButtons">Abbrechen</button>
+        <button id="confirmTextFieldTaskButton" class="modalButtons">Bestätigen</button>
+    </div>
+
+
+    <div id="newFolder-modal" class="modal-overlay">
+        <textarea id="folderTextField" class="modalTextField" placeholder="Benenne deinen Ordner"></textarea>
+        <button id="addFolderConfirm" class="modalButtons">Ordner hinzufügen</button>
+        <button id="addFolderDecline" class="modalButtons">Abbrechen</button>
+    </div>
+    <div id="newFile-modal" class="modal-overlay">
+        <textarea id="fileTextField" class="modalTextField" placeholder="Benenne deine Datei"></textarea>
+        <button id="addFileConfirm" class="modalButtons">Datei hinzufügen</button>
+        <button id="addFileDecline" class="modalButtons">Abbrechen</button>
+    </div>
+
+
+    <div id="addModule-modal" class="modal-overlay">
+        <button id="addModuleTitle" class="modalButtons">Überschrift</button>
+        <button id="addModuleSubTitle" class="modalButtons">Zwischenüberschrift</button>
+        <button id="addModuleText" class="modalButtons">Text</button>
+        <button id="addModuleDrawing" class="modalButtons">Zeichnung</button>
+        <button id="addModuleImage" class="modalButtons">Bild</button>
+    </div>
+    <div id="addModuleText-modal" class="modal-overlay">
+        <textarea id="textModuleTextField" class="modalTextField" placeholder="Dein Text"></textarea>
+        <button id="addTextModuleConfirm" class="modalButtons">Text hinzufügen</button>
+        <button id="addTextModuleDecline" class="modalButtons">Abbrechen</button>
+    </div>
+    <div id="addModuleImage-modal" class="modal-overlay">
+        <textarea id="imageModuleTextField" class="modalTextField" placeholder="Bildratio"></textarea>
+        <button id="addImageModuleConfirm" class="modalButtons">Bild hinzufügen</button>
+        <button id="addImageModuleDecline" class="modalButtons">Abbrechen</button>
+    </div>
+    <div id="addModuleDrawing-modal" class="modal-overlay">
+        <textarea id="addDrawingWidthModuleTextField" class="modalTextField" placeholder="Breite"></textarea>
+        <textarea id="addDrawingHeightModuleTextField" class="modalTextField" placeholder="Höhe"></textarea>
+        <button id="addDrawingModuleConfirm" class="modalButtons">Zeichnung hinzufügen</button>
+        <button id="addDrawingModuleDecline" class="modalButtons">Abbrechen</button>
+    </div>
+
+    <div id="editTextModule-modal" class="modal-overlay">
+        <textarea id="editTextModuleTextField" class="modalTextField"></textarea>
+        <button class="editModuleMoveUp" class="modalButtons">Nach oben verschieben</button>
+        <button class="editModuleMoveDown" class="modalButtons">Nach unten verschieben</button>
+        <button id="editTextModuleSave" class="modalButtons">Speichern</button>
+        <button class="editModuleDecline" class="modalButtons">Abbrechen</button>
+        <button class="editModuleDelete" class="modalButtons">Modul löschen</button>
+    </div>
+    <div id="editModule-modal" class="modal-overlay">
+        <button class="editModuleMoveUp" class="modalButtons">Nach oben verschieben</button>
+        <button class="editModuleMoveDown" class="modalButtons">Nach unten verschieben</button>
+        <button class="editModuleDecline" class="modalButtons">Abbrechen</button>
+        <button class="editModuleDelete" class="modalButtons">Modul löschen</button>
+    </div>
+
+
+    <div id="editPencil-modal" class="modal-overlay">
+        <input type="color" id="editPencilColor" class="modalButtons">
+        <text id="editPencilWidthText" class="modalText"></text>
+        <input type="range" id="editPencilWidth" class="modalButtons" min="1" max="99">
+        <button id="editPencilConfirm" class="modalButtons">Stift bestätigen</button>
+    </div>
+    <div id="editText-modal" class="modal-overlay">
+        <textarea id="editTextTextField" class="modalTextField"></textarea>
+        <input type="color" id="editTextFontColor" class="modalButtons">
+        <input type="range" id="editTextFontSize" class="modalButtons" min="1" max="99">
+        <select id="editTextFontFamily" class="modalButtons">
+            <option value="Arial, sans-serif" style="font-family: Arial, sans-serif;">Arial</option>
+            <option value="'Courier New', Courier, monospace" style="font-family: 'Courier New', Courier, monospace;">
+                Courier New</option>
+            <option value="'Times New Roman', Times, serif" style="font-family: 'Times New Roman', Times, serif;">Times
+                New Roman</option>
+            <option value="Georgia, serif" style="font-family: Georgia, serif;">Georgia</option>
+            <option value="Verdana, sans-serif" style="font-family: Verdana, sans-serif;">Verdana</option>
+        </select>
+        <button id="editTextConfirm" class="modalButtons">Text bestätigen</button>
+        <button id="editTextDelete" class="modalButtons">Text löschen</button>
+        <button id="editTextDecline" class="modalButtons">Abbrechen</button>
+    </div>
+
+    <!-- Hidden Input for Image Uploads -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+
+</body>
+
+</html>
