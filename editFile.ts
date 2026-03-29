@@ -372,6 +372,20 @@ function displayFileContent() {
             pencilSettingsIcon.setAttribute('data-lucide', 'pipette');
             pencilSettingsButton.appendChild(pencilSettingsIcon);
 
+            const pencilForwardCanvasButton = document.createElement('button');
+            pencilForwardCanvasButton.classList.add('pencilForwardCanvasButton');
+            pencilForwardCanvasButton.classList.add('canvasButton');
+            const pencilForwardCanvasIcon = document.createElement('i');
+            pencilForwardCanvasIcon.setAttribute('data-lucide', 'arrow-right');
+            pencilForwardCanvasButton.appendChild(pencilForwardCanvasIcon);
+
+            const pencilBackCanvasButton = document.createElement('button');
+            pencilBackCanvasButton.classList.add('pencilBackCanvasButton');
+            pencilBackCanvasButton.classList.add('canvasButton');
+            const pencilBackCanvasIcon = document.createElement('i');
+            pencilBackCanvasIcon.setAttribute('data-lucide', 'arrow-left');
+            pencilBackCanvasButton.appendChild(pencilBackCanvasIcon);
+
             const addTextCanvasButton = document.createElement('button');
             addTextCanvasButton.classList.add('addTextCanvasButton');
             addTextCanvasButton.classList.add('canvasButton');
@@ -390,6 +404,8 @@ function displayFileContent() {
             settingsContainer.appendChild(addImageCanvasButton);
             settingsContainer.appendChild(selectCanvasButton);
             settingsContainer.appendChild(pencilButton);
+            settingsContainer.appendChild(pencilBackCanvasButton);
+            settingsContainer.appendChild(pencilForwardCanvasButton);
             settingsContainer.appendChild(pencilSettingsButton);
             settingsContainer.appendChild(addTextCanvasButton);
             settingsContainer.appendChild(editTextCanvasButton);
@@ -399,7 +415,7 @@ function displayFileContent() {
             moduleElement.width = drawingDataObj.width;
             moduleElement.height = drawingDataObj.height;
             moduleElement.classList.add('moduleCanvas');
-            initCanvasDrawing(pencilButton, pencilSettingsButton, selectCanvasButton, addImageCanvasInput, editTextCanvasButton, addTextCanvasButton, moduleElement, index, drawingDataObj.drawingData, drawingDataObj.imageData, drawingDataObj.textData, drawingDataObj.width, drawingDataObj.height);
+            initCanvasDrawing(pencilButton, pencilSettingsButton, selectCanvasButton, addImageCanvasInput, editTextCanvasButton, addTextCanvasButton, pencilBackCanvasButton, pencilForwardCanvasButton, moduleElement, index, drawingDataObj.drawingData, drawingDataObj.imageData, drawingDataObj.textData, drawingDataObj.width, drawingDataObj.height);
 
             // Füge Einstellungen und Canvas zum Container hinzu
             container.appendChild(settingsContainer);

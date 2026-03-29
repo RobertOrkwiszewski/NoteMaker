@@ -45,6 +45,8 @@ export function initCanvasDrawing(
     addImageCanvasInput: HTMLInputElement,
     editTextCanvasButton: HTMLButtonElement,
     addTextCanvasButton: HTMLButtonElement,
+    pencilBackCanvasButton: HTMLButtonElement,
+    pencilForwardCanvasButton: HTMLButtonElement,
     canvas: HTMLCanvasElement,
     moduleIndex: number,
     drawingData: Path[],
@@ -71,10 +73,11 @@ export function initCanvasDrawing(
     let selectedImages: DrawingImage[] = [];
     let selectedTexts: DrawingText[] = [];
     let currentPath: Path | null = null;
+    let deletedPaths: Path[] = [];
+
 
     let canvasTextState = "edit"; // edit, add
     let canvasTextIndex = 0;
-
     let currentDrawingData = drawingData;
     let currentImageData = imageData;
     let currentTextData = textData;
@@ -192,8 +195,47 @@ export function initCanvasDrawing(
             chooseCanvasMode("");
         }
     }
+    pencilBackCanvasButton.onclick = () => {
+        const lastPath = currentDrawingData.pop()
+        if (lastPath) {
+            deletedPaths.push(lastPath);
+        }
+        reloadCanvas();
+        editSelectedFileCanvasDrawing(moduleIndex, currentDrawingData);
+        if (currentDrawingData.length === 0) {
+            pencilBackCanvasButton.classList.remove('active');
+        } else {
+            pencilBackCanvasButton.classList.add('active');
+        }
+    }
+    pencilForwardCanvasButton.onclick = () => {
+        const lastDeletedPath = deletedPaths.pop()
+        if (lastDeletedPath) {
+            currentDrawingData.push(lastDeletedPath);
+        }
+        reloadCanvas();
+        editSelectedFileCanvasDrawing(moduleIndex, currentDrawingData);
+        if (deletedPaths.length === 0) {
+            pencilForwardCanvasButton.classList.remove('active');
+        } else {
+            pencilForwardCanvasButton.classList.add('active');
+        }
+    }
 
 
+    function initCanvas() {
+        if (currentDrawingData.length === 0) {
+            pencilBackCanvasButton.classList.remove('active');
+        } else {
+            pencilBackCanvasButton.classList.add('active');
+        }
+        if (deletedPaths.length === 0) {
+            pencilForwardCanvasButton.classList.remove('active');
+        } else {
+            pencilForwardCanvasButton.classList.add('active');
+        }
+    }
+    initCanvas();
     function isNear(x1: number, y1: number, x2: number, y2: number, threshold: number = 10): boolean {
         return Math.abs(x1 - x2) < threshold && Math.abs(y1 - y2) < threshold;
     }
